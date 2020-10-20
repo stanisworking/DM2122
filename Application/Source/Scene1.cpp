@@ -24,21 +24,27 @@ void Scene1::Init()
 	glBindVertexArray(m_vertexArrayID);
 
 	glGenBuffers(NUM_GEOMETRY, &m_vertexBuffer[0]);
-	glGenBuffers(NUM_GEOMETRY, &m_colorBuffer[0]);
+	glGenBuffers(NUM_GEOMETRY, &m_colorBuffer[0]);	
 
 	static const GLfloat vertex_buffer_data[] = {
-		0.0f, 1.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		-1.0f, 0.0f, 0.0f
+		-0.5f, 0.5f, 0.0f,
+		-0.5f, 0.0f, 0.0f,
+		0.0f, 0.5f, 0.0f,
+		0.0f, 0.0f, 0.0f,
+		0.5f, 0.5f, 0.0f,
+		0.5f, 0.0f, 0.0f,
 	};
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_1]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data), vertex_buffer_data, GL_STATIC_DRAW);
-
+	
 	static const GLfloat color_buffer_data[] = {
-		0.0f, 1.0f, 0.0f,
 		1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f
+		1.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0f
 	};
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_1]);
@@ -64,7 +70,8 @@ void Scene1::Render()
 	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_1]);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 }
