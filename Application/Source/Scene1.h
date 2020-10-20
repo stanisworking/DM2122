@@ -8,6 +8,7 @@ class Scene1 : public Scene
 public:
 	enum GEOMETRY_TYPE {
 		GEO_TRIANGLE_1 = 0,
+		GEO_TRIANGLE_2,
 		NUM_GEOMETRY
 	};
 
@@ -20,7 +21,7 @@ public:
 	virtual void Exit();
 
 private:
-	unsigned m_vertexArrayID;
+	unsigned m_vertexArrayID[NUM_GEOMETRY];
 	unsigned m_vertexBuffer[NUM_GEOMETRY];
 	unsigned m_colorBuffer[NUM_GEOMETRY];
 	unsigned m_programID;
