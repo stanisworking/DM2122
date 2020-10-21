@@ -49,6 +49,10 @@ void Scene1::Init()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_1]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data), color_buffer_data, GL_STATIC_DRAW);
+
+
+	m_programID = LoadShaders("Shader//SimpleVertexShader.vertexshader", "Shader//SimpleFragmentShader.fragmentshader");
+	glUseProgram(m_programID);
 }
 
 void Scene1::Update(double dt)
@@ -82,4 +86,5 @@ void Scene1::Exit()
 	glDeleteBuffers(NUM_GEOMETRY, &m_vertexBuffer[0]);
 	glDeleteBuffers(NUM_GEOMETRY, &m_colorBuffer[0]);
 	glDeleteVertexArrays(1, &m_vertexArrayID);
+	glDeleteProgram(m_programID);
 }
