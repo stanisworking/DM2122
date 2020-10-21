@@ -23,13 +23,13 @@ void Scene1::Init()
 	glEnable(GL_DEPTH_TEST);
 
 	// Generate a default VAO for now
-	glGenVertexArrays(NUM_GEOMETRY, m_vertexArrayID);
+	glGenVertexArrays(1, &m_vertexArrayID);
+	glBindVertexArray(m_vertexArrayID);
+
+	glGenBuffers(NUM_GEOMETRY, &m_vertexBuffer[0]);
+	glGenBuffers(NUM_GEOMETRY, &m_colorBuffer[0]);
 
 	// GEO_TRIANGLE_1
-	glBindVertexArray(m_vertexArrayID[GEO_TRIANGLE_1]);
-	glGenBuffers(NUM_GEOMETRY, &m_vertexBuffer[GEO_TRIANGLE_1]);
-	glGenBuffers(NUM_GEOMETRY, &m_colorBuffer[GEO_TRIANGLE_1]);
-
 	static const GLfloat vertex_buffer_data_1[] = {
 		0.0f, 1.0f, 0.0f,
 		1.0f, 0.0f, 0.0f,
@@ -51,10 +51,6 @@ void Scene1::Init()
 
 
 	// GEO_TRIANGLE_2
-	glBindVertexArray(m_vertexArrayID[GEO_TRIANGLE_2]);
-	glGenBuffers(NUM_GEOMETRY, &m_vertexBuffer[GEO_TRIANGLE_2]);
-	glGenBuffers(NUM_GEOMETRY, &m_colorBuffer[GEO_TRIANGLE_2]);
-
 	static const GLfloat vertex_buffer_data_2[] = {
 		0.0f, 0.0f, 0.5f,
 		1.0f, 1.0f, 0.5f,
@@ -65,9 +61,9 @@ void Scene1::Init()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data_2), vertex_buffer_data_2, GL_STATIC_DRAW);
 
 	static const GLfloat color_buffer_data_2[] = {
-		0.0f, 1.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f
 	};
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_2]);
@@ -115,6 +111,6 @@ void Scene1::Exit()
 	// Cleanup VBO here
 	glDeleteBuffers(NUM_GEOMETRY, &m_vertexBuffer[0]);
 	glDeleteBuffers(NUM_GEOMETRY, &m_colorBuffer[0]);
-	glDeleteVertexArrays(NUM_GEOMETRY, m_vertexArrayID);
+	glDeleteVertexArrays(NUM_GEOMETRY, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
 }
