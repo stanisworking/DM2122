@@ -23,11 +23,11 @@ void Scene1::Init()
 	glEnable(GL_DEPTH_TEST);
 
 	// Generate a default VAO for now
-	glGenVertexArrays(1, &m_vertexArrayID);
-	glBindVertexArray(m_vertexArrayID);
+	glGenVertexArrays(NUM_GEOMETRY, m_vertexArrayID);
+	glGenBuffers(NUM_GEOMETRY, m_vertexBuffer);
+	glGenBuffers(NUM_GEOMETRY, m_colorBuffer);
 
-	glGenBuffers(NUM_GEOMETRY, &m_vertexBuffer[0]);
-	glGenBuffers(NUM_GEOMETRY, &m_colorBuffer[0]);
+	glBindVertexArray(m_vertexArrayID[GEO_TRIANGLE_1]);
 
 	// GEO_TRIANGLE_1
 	static const GLfloat vertex_buffer_data_1[] = {
@@ -51,6 +51,7 @@ void Scene1::Init()
 
 
 	// GEO_TRIANGLE_2
+	glBindVertexArray(m_vertexArrayID[GEO_TRIANGLE_2]);
 	static const GLfloat vertex_buffer_data_2[] = {
 		0.0f, 0.0f, 0.5f,
 		1.0f, 1.0f, 0.5f,
@@ -82,26 +83,25 @@ void Scene1::Render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_1]);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	glEnableVertexAttribArray(1);
+	
 	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_1]);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
 
-	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_2]);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	glEnableVertexAttribArray(1);
 	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_2]);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glDrawArrays(GL_TRIANGLES, 0, 3);
+	
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 }
@@ -109,8 +109,8 @@ void Scene1::Render()
 void Scene1::Exit()
 {
 	// Cleanup VBO here
-	glDeleteBuffers(NUM_GEOMETRY, &m_vertexBuffer[0]);
-	glDeleteBuffers(NUM_GEOMETRY, &m_colorBuffer[0]);
-	glDeleteVertexArrays(NUM_GEOMETRY, &m_vertexArrayID);
+	glDeleteBuffers(NUM_GEOMETRY, m_vertexBuffer);
+	glDeleteBuffers(NUM_GEOMETRY, m_colorBuffer);
+	glDeleteVertexArrays(NUM_GEOMETRY, m_vertexArrayID);
 	glDeleteProgram(m_programID);
 }

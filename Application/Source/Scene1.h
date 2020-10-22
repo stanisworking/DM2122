@@ -21,7 +21,7 @@ public:
 	virtual void Exit();
 
 private:
-	unsigned m_vertexArrayID;
+	unsigned m_vertexArrayID[NUM_GEOMETRY];
 	unsigned m_vertexBuffer[NUM_GEOMETRY];
 	unsigned m_colorBuffer[NUM_GEOMETRY];
 	unsigned m_programID;
